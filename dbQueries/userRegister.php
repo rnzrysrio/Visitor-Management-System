@@ -1,5 +1,4 @@
 <?php
-// Handle registration
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include('db.php');  // Database connection
 
@@ -9,17 +8,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
 
-    // Check if the username already exists
+    //Username exists?
     $checkUsernameQuery = "SELECT * FROM user_accounts WHERE username='$username'";
     $result = mysqli_query($conn, $checkUsernameQuery);
 
     if (mysqli_num_rows($result) > 0) {
         echo "<script>alert('Username already taken. Please choose a different one.');</script>";
     } else {
-        // Hash the password
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insert user into the database
         $query = "INSERT INTO user_accounts (username, password, name, email, phoneNumber) 
                   VALUES ('$username', '$hashedPassword', '$name', '$email', '$phone')";
         
@@ -27,9 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "<script>
                     alert('Registration Successful!');
                     if (confirm('Would you like to log in now?')) {
-                        window.location.href = 'loginPage.php';
+                        window.location.href = '../loginPage.php';
                     } else {
-                        window.location.href = 'registerPage.php';
+                        window.location.href = '../registerPage.php';
                     }
                   </script>";
         } else {
