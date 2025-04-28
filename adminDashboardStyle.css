@@ -6,15 +6,98 @@
 }
 
 body {
-    background: linear-gradient(to right, #d1d1d1, #f5f5f5);
+    background-color: #373737;
 }
+
+.userHeader {
+    position: sticky;
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#userGreeting {
+    color: black;
+    font-size: 30px;
+    margin: 0 20px;
+}
+
+.profile-dropdown {
+    position: relative;
+    margin-left: auto;
+}
+
+.dropbtn {
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    float: right;
+    padding: 10px 10px;
+    background-color: #373737;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+.dropdown-content {
+    border: 1px solid #000;
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #f0f0f0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: 30px;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: black;
+    transition: background-color 0.3s ease;
+}
+
+li a:hover {
+    background-color: #594d5b;
+    color: #fff;
+}
+
 
 .dashboard {
     color: black;
-    padding: 20px; /* Added padding to give more space around the content */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
     width: 90%;
     border: 1px solid black;
-    margin: auto;
+    margin: 20px auto;
 }
 
 .dashboard hr {
@@ -43,26 +126,26 @@ body {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 30px; /* Increased padding for a more spacious card */
+    padding: 30px;
     width: 300px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition on hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .dashboard .card-container .card:hover {
-    transform: translateY(-5px); /* Lift the card slightly on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .dashboard .card-container .card h2 {
     font-size: 24px;
-    color: #333; /* Darker color for the heading */
+    color: #333;
     margin-bottom: 15px;
 }
 
 .dashboard .card-container .card p {
     font-size: 32px;
     font-weight: bold;
-    color: #4a69bd; /* Retained your blue color for numbers */
+    color: #4a69bd;
     margin-top: 10px;
 }

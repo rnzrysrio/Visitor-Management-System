@@ -40,6 +40,17 @@ if (isset($_SESSION['username'])) {
     <script src="script.js"></script>
 </head>
 <body>
+
+    <div class="userHeader">
+        <h1 id="userGreeting">Hello <?php echo $_SESSION['name']?></h1>
+        <div class="profile-dropdown">
+            <button id="dropbtn" class="dropbtn" onclick="toggleProfile()">&#9662;</button>
+            <div id="dropdown-content" class="dropdown-content">
+                <a href="dbQueries/logout.php">Logout</a>
+            </div>
+        </div>
+    </div>
+
     <div class="appointments">
         <table>
             <caption>Appointment History</caption>
@@ -71,9 +82,9 @@ if (isset($_SESSION['username'])) {
                         echo "<td>" . htmlspecialchars($appointment['purpose']) . "</td>";
                         echo "<td>" . htmlspecialchars($appointment['department']) . "</td>";
                         if ($appointment['visit_status'] == '1') {
-                            echo "<td style='color: green;'>Checked-In</td>";
+                            echo "<td class='checkInStatus' style='color: green;'>Checked-In</td>";
                         } else if ($appointment['visit_status'] == '0') {
-                            echo "<td style='color: red;'>Checked-Out</td>";
+                            echo "<td class='checkInStatus' style='color: red;'>Checked-Out</td>";
                         } 
                         echo "</tr>";
                     }
@@ -105,16 +116,27 @@ if (isset($_SESSION['username'])) {
             <input type="date" id="visit-date" name="visit-date" required>
 
             <label for="checkin">Check In Time:</label>
-            <input type="time" id="checkin" name="checkin" required>
+            <select id="checkin" name="checkin" required>
+                    <option value="" disabled selected>Select Check In Time</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+            </select>
 
             <label for="checkout">Check Out Time:</label>
-            <input type="time" id="checkout" name="checkout" required>
+            <select id="checkout" name="checkout">
+                    <option value="" disabled selected>Select Check In Time</option>
+                    <option value="9:00 AM">9:00 AM</option>
+                    <option value="3:00 PM">3:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+            </select>
 
             <label for="purpose">Purpose of Visit:</label>
             <textarea id="purpose" name="purpose"></textarea>
 
             <label for="department">Department:</label>
-            <select name="department" id="department">
+            <select name="department" id="department" required>
+                <option value="" disabled selected>Select Department</option>
                 <option value="HR">HR</option>
                 <option value="IT">IT</option>
                 <option value="Finance">Finance</option>

@@ -18,3 +18,76 @@ function toggleAppointmentModal() {
     modal.style.display = modal.style.display === "block" ? "none" : "block";
     modalOverlay.style.display = modalOverlay.style.display === "block" ? "none" : "block";
 }
+
+function toggleCustomCheckoutTime() {
+    var checkOutSelect = document.getElementById("editCheckOut");
+    var customTimeInput = document.getElementById("customCheckOutTime");
+
+    if (checkOutSelect.value === "other") {
+        customTimeInput.style.display = "block";
+    } else {
+        customTimeInput.style.display = "none";
+    }
+}
+
+
+function toggleEditVisitorInfoModal(appointment) {
+    var modal = document.getElementById("editVisitorInfoModal");
+
+    if (modal.style.display === "block") {
+        modal.style.display = "none";
+    } else {
+        // Set values
+        document.getElementById("appointment_id").value = appointment.id;
+        document.getElementById("editName").value = appointment.name;
+        document.getElementById("editEmail").value = appointment.email;
+        document.getElementById("editPhone").value = appointment.phone;
+        document.getElementById("editVisitDate").value = appointment.visit_date;
+        document.getElementById("editCheckIn").value = appointment.checkin_time;
+        document.getElementById("editCheckOut").value = appointment.checkout_time;
+        document.getElementById("editPurpose").value = appointment.purpose;
+        document.getElementById("editDepartment").value = appointment.department;
+        document.getElementById("editStatus").value = appointment.visit_status;
+
+        modal.style.display = "block";
+    }
+}
+
+function confirmDelete(appointmentId) {
+    // Confirm the deletion
+    if (confirm("Are you sure you want to delete this record?")) {
+        // Make an AJAX request to delete the record
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "dbQueries/deleteVisitorInfo.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onload = function () {
+            if (xhr.status == 200) {
+                alert("Record deleted successfully.");
+                location.reload(); // Refresh the page to update the list
+            } else {
+                alert("Error deleting record.");
+            }
+        };
+
+        xhr.send("id=" + appointmentId);
+    }
+}
+
+
+document.querySelector(".closeBtn").addEventListener("click", function() {
+    document.getElementById("editVisitorInfoModal").style.display = "none";
+});
+
+function toggleProfile() {
+    var dropdown = document.getElementById("dropdown-content");
+    var dropdownBtn = document.getElementById("dropbtn");
+
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+        dropdownBtn.innerHTML = "&#9662;"; // ▼
+    } else {
+        dropdown.style.display = "block";
+        dropdownBtn.innerHTML = "&#9652;"; // ▲
+    }
+}

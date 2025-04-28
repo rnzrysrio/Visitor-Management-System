@@ -1,34 +1,51 @@
 <?php
 
+session_start();
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include('db.php');  // Database connection
 
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $visitDate = $_POST['visit-date'];
-    $checkInTime = $_POST['checkin'];
-    $checkOutTime = $_POST['checkout'];
-    $purpose = $_POST['purpose'];
-    $department = $_POST['department'];
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $visitDate = mysqli_real_escape_string($conn, $_POST['visit-date']);
+    $checkInTime = mysqli_real_escape_string($conn, $_POST['checkin']);
+    $checkOutTime = mysqli_real_escape_string($conn, $_POST['checkout']);
 
-   // Check if the same appointment is made
-   $checkAppointmentDuplication = "SELECT * FROM appointments WHERE name='$name' AND visit_date='$visitDate' AND checkin_time='$checkInTime' AND checkout_time='$checkOutTime'";
-   $result = mysqli_query($conn, $checkAppointmentDuplication);
+    $purpose = mysqli_real_escape_string($conn, $_POST['purpose']);
+    $department = mysqli_real_escape_string($conn, $_POST['department']);
 
-   if (mysqli_num_rows($result) > 0) {
-    echo "<script>alert('You already made an appointment with the same date, check-in time, and check-out time!');</script>";
-   }
-   else{
+    // Check if the same appointment is made
+    $checkAppointmentDuplication = "SELECT * FROM appointments WHERE name=? AND visit_date=? AND checkin_time=? AND checkout_time=?";
+    $stmt = $conn->prepare($checkAppointmentDuplication);
+    $stmt->bind_param("ssss", $name, $visitDate, $checkInTime, $checkOutTime);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<script>alert('You already made an appointment with the same date, check-in time, and check-out time!');</script>";
+        header('Location: ../userDashboard.php');
+    } else {
         // Insert appointment into the database
-        $query = "INSERT INTO appointments (name, email, phone, visit_date, checkin_time, checkout_time, purpose, department) VALUES ('$name', '$email', '$phone', '$visitDate', '$checkInTime', '$checkOutTime', '$purpose', '$department')";
+        $query = "INSERT INTO appointments (name, email, phone, visit_date, checkin_time, checkout_time, purpose, department) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ssssssss", $name, $email, $phone, $visitDate, $checkInTime, $checkOutTime, $purpose, $department);
 
-        if (mysqli_query($conn, $query)) {
+        if ($stmt->execute()) {
             echo "<script>alert('Appointment Added Successfully!');</script>";
-            header('Location: ../userDashboard.php');
+            if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                header('Location: ../adminDashboard.php');
+            } else {
+                header('Location: ../userDashboard.php');
+            }
         } else {
             echo "<script>alert('Failed to Add Appointment!');</script>";
         }
     }
+
+    $stmt->close();
+    $conn->close();
 }
+
 ?>
