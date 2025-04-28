@@ -28,7 +28,7 @@ body {
     margin-left: auto;
 }
 
-button {
+.dropbtn {
     font-size: 15px;
     cursor: pointer;
     border: none;
@@ -38,7 +38,31 @@ button {
     background-color: #373737;
     transition: background-color 0.3s ease;
     border-radius: 10px;
-    margin: 10px;
+}
+
+.dropbtn:hover {
+    background-color: #555;
+}
+
+.backBtn{
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    float: right;
+    padding: 10px 10px;
+    background-color: #373737;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+.backBtn a{
+    text-decoration: none;
+    color: white;
+}
+
+.backBtn:hover{
+    background-color: #555;
 }
 
 .dropdown-content {
@@ -67,85 +91,8 @@ button {
     background-color: #f0f0f0;
 }
 
-.appointments{
+.addAppointment {
     margin: 30px auto;
-    width: 1250px;
-    background-color: #fff;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.appointmentList{
-    width: 90%;
-    margin: 30px auto;
-    overflow-y: auto;
-    max-height: 200px;
-    border: 1px solid #ccc;
-}
-
-button:hover {
-    background-color: #594d5b;
-}
-
-#modalOverlay{
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
-}
-
-caption{
-    caption-side: top;
-    font-size: 24px;
-    font-weight: bold;
-    margin: 30px 0;
-}
-
-table, th, tr, td{
-    border: 1px solid #000000;
-    padding: 10px;
-}
-
-table{
-    margin-top: 30px;
-    border-collapse: collapse;
-    text-wrap: break-word;
-    width: 100%;
-}
-
-th{
-    background-color: #707070;
-    text-align: center;
-    border-collapse: collapse;
-    color: #fff;
-}
-
-tr{
-    background-color: #fff;
-    transition: background-color 0.3s ease;
-    text-align: left;
-}
-
-tr:hover{
-    background-color: #707070;
-    color: #fff;
-}
-
-tr:hover td.checkInStatus{
-    color: #fff !important;
-}
-
-table{
-    width: 90%;
-    margin: auto;
-}
-
-.appointmentModal{
-    display: none;
     border: 1px solid #000000;
     max-width: 600px;
     background-color: white;
@@ -155,11 +102,6 @@ table{
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 5px;
-}
-
-.exitModal{
-    position: absolute;
-    right: 5px;
 }
 
 h1{
@@ -191,4 +133,17 @@ select{
     border-radius: 5px;
     border: 1px solid #ccc;
     margin: 5px 5px;
+}
+
+button {
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    float: right;
+    padding: 10px 10px;
+    background-color: #373737;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    margin-bottom: 5px;
 }

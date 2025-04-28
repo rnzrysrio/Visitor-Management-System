@@ -6,7 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Fetch user from the database based on the entered username
     $query = "SELECT * FROM user_accounts WHERE username='$username'";
     $result = mysqli_query($conn, $query);
     $user = mysqli_fetch_assoc($result);
@@ -23,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     } else {
         $error_message = "Invalid username or password.";
+        header('Location: ../loginPage.php');
         echo "<script>alert('Invalid username or password!');</script>";
     }
 }
