@@ -1,0 +1,197 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #373737;
+}
+
+.userHeader {
+    position: sticky;
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#userGreeting {
+    color: black;
+    font-size: 30px;
+    margin: 0 20px;
+}
+
+.profile-dropdown {
+    position: relative;
+    margin-left: auto;
+}
+
+.dropbtn {
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    float: right;
+    padding: 10px 10px;
+    background-color: #373737;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+.dropbtn:hover {
+    background-color: #555;
+}
+
+.backBtn{
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    float: right;
+    padding: 10px 10px;
+    background-color: #373737;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+.backBtn a{
+    text-decoration: none;
+    color: white;
+}
+
+.backBtn:hover{
+    background-color: #555;
+}
+
+.dropdown-content {
+    border: 1px solid #000;
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #f0f0f0;
+}
+
+.appointments{
+    margin: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #000;
+}
+
+caption{
+    caption-side: top;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 30px 0;
+}
+
+table, th, tr, td{
+    border: 1px solid #000000;
+    padding: 10px;
+}
+
+table{
+    border-collapse: collapse;
+    text-wrap: break-word;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th{
+    background-color: #707070;
+    text-align: center;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+tr{
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+    text-align: left;
+}
+
+tr:hover{
+    background-color: #707070;
+    color: #fff;
+}
+
+tr:hover td .checkInStatus{
+    color: #fff !important;
+}
+
+.filter-form {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 15px 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+}
+
+.filter-form form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-form label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.filter-form input[type="date"] {
+    padding: 5px 10px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+.filter-form button {
+    padding: 6px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-form button:hover {
+    background-color: #45a049;
+}
+
+.filter-form a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.filter-form a:hover {
+    text-decoration: underline;
+}
+
+#printer{
+    margin: auto;
+}

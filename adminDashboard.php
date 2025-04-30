@@ -44,7 +44,7 @@ $checked_out_visitors = $row_checked_out['COUNT(*)'];
     <meta name="charset" content="UTF-8">
     <link rel="stylesheet" href="adminDashboardStyle.css">
     <script src="script.js"></script>
-    <title>Visitor Management System</title>
+    <title>VMS</title>
 </head>
 <body>
     <div class="userHeader">
@@ -53,6 +53,7 @@ $checked_out_visitors = $row_checked_out['COUNT(*)'];
             <li>
                 <a href="adminAddVisitorPage.php">Add Visitor</a>
                 <a href="manageVisitorPage.php">Manage Visitors</a>
+                <a href="visitorReportPage.php">Visitor Report</a>
             </li>
         </ul>
         <div class="profile-dropdown">

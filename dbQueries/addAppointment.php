@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $purpose = mysqli_real_escape_string($conn, $_POST['purpose']);
     $department = mysqli_real_escape_string($conn, $_POST['department']);
+    $encoder = mysqli_real_escape_string($conn, $_POST['encoder']);
 
     // Check if the same appointment is made
     $checkAppointmentDuplication = "SELECT * FROM appointments WHERE name=? AND visit_date=? AND checkin_time=? AND checkout_time=?";
@@ -27,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: ../userDashboard.php');
     } else {
         // Insert appointment into the database
-        $query = "INSERT INTO appointments (name, email, phone, visit_date, checkin_time, checkout_time, purpose, department) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO appointments (name, email, phone, visit_date, checkin_time, checkout_time, purpose, department, encoder) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("ssssssss", $name, $email, $phone, $visitDate, $checkInTime, $checkOutTime, $purpose, $department);
+        $stmt->bind_param("sssssssss", $name, $email, $phone, $visitDate, $checkInTime, $checkOutTime, $purpose, $department, $encoder);
 
         if ($stmt->execute()) {
             echo "<script>alert('Appointment Added Successfully!');</script>";

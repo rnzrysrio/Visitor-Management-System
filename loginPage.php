@@ -7,7 +7,7 @@
     <meta name="keywords" content="Visitor">
     <meta name="charset" content="UTF-8">
     <link rel="stylesheet" href="loginPage.css">
-    <title>User</title>
+    <title>VMS</title>
 </head>
 <body>
 <div class="login-container">

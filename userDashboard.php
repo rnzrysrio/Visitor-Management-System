@@ -10,9 +10,9 @@ include('dbQueries/db.php'); // Adjust the path as necessary
 
 // Check if the user is logged in and retrieve user information
 if (isset($_SESSION['username'])) {
-    $userSessionName = mysqli_real_escape_string($conn, $_SESSION['name']);
+    $name = mysqli_real_escape_string($conn, $_SESSION['name']);
 
-    $fetchAppointmentHistory = "SELECT * FROM appointments WHERE name='$userSessionName'";
+    $fetchAppointmentHistory = "SELECT * FROM appointments WHERE name='$name'";
     $result = mysqli_query($conn, $fetchAppointmentHistory);
     if ($result) {
         $appointments = mysqli_fetch_all($result, MYSQLI_ASSOC); // Fetch all appointments for the user
@@ -36,13 +36,13 @@ if (isset($_SESSION['username'])) {
     <meta name="keywords" content="Visitor">
     <meta name="charset" content="UTF-8">
     <link rel="stylesheet" href="userDashboardStyle.css">
-    <title>User Home</title>
+    <title>VMS</title>
     <script src="script.js"></script>
 </head>
 <body>
 
     <div class="userHeader">
-        <h1 id="userGreeting">Hello <?php echo $_SESSION['name']?></h1>
+        <h1 id="userGreeting">Hello! <?php echo $_SESSION['name']?></h1>
         <div class="profile-dropdown">
             <button id="dropbtn" class="dropbtn" onclick="toggleProfile()">&#9662;</button>
             <div id="dropdown-content" class="dropdown-content">
@@ -104,7 +104,7 @@ if (isset($_SESSION['username'])) {
         <h1>Add Appointment</h1>
         <form action="dbQueries/addAppointment.php" method="post">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" value="<?php echo $userSessionName ?>" require readonly>
+            <input type="text" id="name" name="name" value="<?php echo $name ?>" require readonly>
 
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" required>
@@ -144,6 +144,8 @@ if (isset($_SESSION['username'])) {
                 <option value="Marketing">Marketing</option>
             </select>
 
+            <input type="hidden" id="encoder" name="encoder" value="<?php echo $name ?>">
+            
             <button type="submit" value="submit">Submit Appointment</button>
         </form>
     </div>
