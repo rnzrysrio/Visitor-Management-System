@@ -1,32 +1,37 @@
 <?php
-// Start session and check login status
 session_start();
 if (!isset($_SESSION['username'])) {
-    header("Location: loginPage.php"); // Redirect to login if not logged in
+    header("Location: loginPage.php");
     exit();
 }
 
-// Include database connection file
-include('dbQueries/db.php'); // Adjust the path as necessary
+include('dbQueries/db.php');
 
-// Default query to fetch all appointments (if no search is made)
 $appointments = [];
 $searchName = "";
 
-// Check if a search query is made
-if (isset($_POST['searchName'])) {
-    $searchName = mysqli_real_escape_string($conn, $_POST['searchName']);
-    
-    // Fetch the appointment history of the specific visitor by name
-    $fetchAppointmentHistory = "SELECT * FROM appointments WHERE name LIKE '%$searchName%'";
-    $result = mysqli_query($conn, $fetchAppointmentHistory);
-    if ($result) {
-        $appointments = mysqli_fetch_all($result, MYSQLI_ASSOC); // Fetch all appointments for the user
-    } else {
-        echo "<script>alert('Failed to fetch appointment history!');</script>";
-    }
+// Handle search submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['searchName'])) {
+    $_SESSION['searchName'] = trim($_POST['searchName']);
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
+// After redirect (GET request), check if search was stored
+if (isset($_SESSION['searchName']) && $_SESSION['searchName'] !== "") {
+    $searchName = mysqli_real_escape_string($conn, $_SESSION['searchName']);
+    $query = "SELECT * FROM appointments WHERE name LIKE '%$searchName%'";
+} else {
+    $query = "SELECT * FROM appointments";
+    unset($_SESSION['searchName']); // Reset session
+}
+
+$result = mysqli_query($conn, $query);
+if ($result) {
+    $appointments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+} else {
+    echo "<script>alert('Failed to fetch appointment history!');</script>";
+}
 ?>
 
 
@@ -41,7 +46,7 @@ if (isset($_POST['searchName'])) {
     <meta name="charset" content="UTF-8">
     <link rel="stylesheet" href="manageVisitorPageStyle.css">
     <script src="script.js"></script>
-    <title>Manage Visitors</title>
+    <title>VMS</title>
 </head>
 <body>
     <div class="userHeader">
@@ -70,13 +75,9 @@ if (isset($_POST['searchName'])) {
                 <thead>
                     <tr>
                         <th>Visitor Name</th>
-                        <th>Email</th>
-                        <th>Contact Number</th>
                         <th>Visit Date</th>
                         <th>Check In Time</th>
                         <th>Check Out Time</th>
-                        <th>Purpose of Visit</th>
-                        <th>Department</th>
                         <th>Visit Status</th>
                         <th>Action</th>
                     </tr>
@@ -87,19 +88,15 @@ if (isset($_POST['searchName'])) {
                         foreach ($appointments as $appointment) {
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($appointment['name']) . "</td>";
-                            echo "<td>" . htmlspecialchars($appointment['email']) . "</td>";
-                            echo "<td>" . htmlspecialchars($appointment['phone']) . "</td>";
                             echo "<td>" . htmlspecialchars($appointment['visit_date']) . "</td>";
                             echo "<td>" . htmlspecialchars($appointment['checkin_time']) . "</td>";
                             echo "<td>" . htmlspecialchars($appointment['checkout_time']) . "</td>";
-                            echo "<td>" . htmlspecialchars($appointment['purpose']) . "</td>";
-                            echo "<td>" . htmlspecialchars($appointment['department']) . "</td>";
                             echo "<td>" . ($appointment['visit_status'] == '1' ? "<span class='checkInStatus' style='color: green;'>Checked-In</span>" : "<span class='checkInStatus' style='color: red;'>Checked-Out</span>") . "</td>";
                             echo "<td id='actionCell'><button class='actionBtn' onclick='toggleEditVisitorInfoModal(" . htmlspecialchars(json_encode($appointment)) . ")'>Edit</button> <button class='actionBtn' onclick='confirmDelete(" . $appointment['id'] . ")'>Delete</button></td>";
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='9'>No appointments found.</td></tr>";
+                        echo "<tr><td style='text-align: center;' colspan='9'>No appointments found.</td></tr>";
                     }
                     ?>
                 </tbody>
@@ -143,9 +140,7 @@ if (isset($_POST['searchName'])) {
                     <option value="other">Other (Specify Time)</option>
                 </select>
 
-                <!-- Input field for custom time (hidden by default) -->
                 <input type="text" id="customCheckOutTime" name="customCheckOutTime" placeholder="Enter custom check out time" style="display:none;">
-
 
                 <label for="editPurpose">Purpose of Visit:</label>
                 <textarea id="editPurpose" name="editPurpose"></textarea>
@@ -166,6 +161,7 @@ if (isset($_POST['searchName'])) {
                     <option value="0">Checked-Out</option>
                 </select>
 
+                <input type="hidden" id="encoder" name="encoder" value="<?php echo "Admin " . $_SESSION['name']; ?>">
                 <button type="submit">Save Changes</button>
             </form>
         </div>

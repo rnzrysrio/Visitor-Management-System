@@ -20,13 +20,13 @@ function toggleAppointmentModal() {
 }
 
 function toggleCustomCheckoutTime() {
-    var checkOutSelect = document.getElementById("editCheckOut");
-    var customTimeInput = document.getElementById("customCheckOutTime");
-
-    if (checkOutSelect.value === "other") {
-        customTimeInput.style.display = "block";
+    const checkOutTimeSelect = document.getElementById('editCheckOut');
+    const customCheckOutTimeInput = document.getElementById('customCheckOutTime');
+    
+    if (checkOutTimeSelect.value === 'other') {
+        customCheckOutTimeInput.style.display = 'block';
     } else {
-        customTimeInput.style.display = "none";
+        customCheckOutTimeInput.style.display = 'none';
     }
 }
 

@@ -8,7 +8,7 @@
     <meta name="keywords" content="Visitor">
     <meta name="charset" content="UTF-8">
     <link rel="stylesheet" href="registerPage.css">
-    <title>User</title>
+    <title>VMS</title>
     <script src="script.js"></script>
 </head>
 <body>

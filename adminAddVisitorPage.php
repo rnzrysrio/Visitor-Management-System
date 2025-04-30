@@ -2,6 +2,10 @@
 
 session_start();
 
+if (!isset($_SESSION['username'])) {
+    header("Location: loginPage.php"); // Redirect to login page if not logged in
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +19,7 @@ session_start();
     <meta name="charset" content="UTF-8">
     <link rel="stylesheet" href="adminAddVisitorPage.css">
     <script src="script.js"></script>
-    <title>Add Visitor</title>
+    <title>VMS</title>
 </head>
 <body>
     <div class="userHeader">
@@ -72,6 +76,8 @@ session_start();
                 <option value="Admin">Admin</option>
                 <option value="Marketing">Marketing</option>
             </select>
+
+            <input type="hidden" id="encoder" name="encoder" value="<?php echo "Admin " . $_SESSION['name']; ?>">
 
             <button type="submit" value="submit">Submit Appointment</button>
         </form>
