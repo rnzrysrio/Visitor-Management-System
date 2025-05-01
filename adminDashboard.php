@@ -5,6 +5,7 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 include('dbQueries/db.php');
+include('dbQueries/autoCheckoutManager.php');
 
 // Total Count
 $sql_total = "SELECT COUNT(*) FROM appointments";
