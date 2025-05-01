@@ -117,7 +117,16 @@ if ($stmt) {
                         echo "<td>" . htmlspecialchars($appointment['checkout_time']) . "</td>";
                         echo "<td>" . htmlspecialchars($appointment['purpose']) . "</td>";
                         echo "<td>" . htmlspecialchars($appointment['department']) . "</td>";
-                        echo "<td>" . ($appointment['visit_status'] == '1' ? "<span class='checkInStatus' style='color: green;'>Checked-In</span>" : "<span class='checkInStatus' style='color: red;'>Checked-Out</span>") . "</td>";
+                        if ($appointment['visit_status'] == '1') {
+                            echo "<td class='checkInStatus' style='color: green;'>Checked-In</td>";
+                        } else if ($appointment['visit_status'] == '0') {
+                            echo "<td class='checkInStatus' style='color: red;'>Checked-Out</td>";
+                        } else if ($appointment['visit_status'] == '2') {
+                            echo "<td class='checkInStatus' style='color: orange;'>Reserved</td>";
+                        }
+                        else{
+                            echo "<td class='checkInStatus' style='color: gray;'>Unknown</td>";
+                        }
                         echo "<td>" . htmlspecialchars($appointment['encoder']) . "</td>";
                         echo "</tr>";
                     }

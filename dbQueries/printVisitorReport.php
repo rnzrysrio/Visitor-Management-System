@@ -35,8 +35,8 @@ $pdf->Ln();
 // Set font for content with smaller size
 $pdf->SetFont('Arial', '', 6);  // Smaller font size for content
 while ($row = $result->fetch_assoc()) {
-    $status = $row['visit_status'] == '1' ? 'Checked-In' : 'Checked-Out';
-    
+    $status = $row['visit_status'] == '1' ? 'Checked-In' : ($row['visit_status'] == '2' ? 'Reserved' : 'Checked-Out');
+
     // Position the first 6 cells using Cell with smaller width and height
     $pdf->Cell(25, 6, $row['name'], 1);
     $pdf->Cell(25, 6, $row['email'], 1);

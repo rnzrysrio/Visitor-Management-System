@@ -48,21 +48,24 @@ if (!isset($_SESSION['username'])) {
             <label for="visit-date">Visit Date:</label>
             <input type="date" id="visit-date" name="visit-date" required>
 
-            <label for="checkin">Check In Time:</label>
-            <select id="checkin" name="checkin" required>
-                    <option value="" disabled selected>Select Check In Time</option>
-                    <option value="7:00 AM">7:00 AM</option>
-                    <option value="1:00 PM">1:00 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
+            <label for="editCheckIn">Check In Time:</label>
+            <select id="editCheckIn" name="checkin" required onchange="updateCheckoutTime()">
+                <option value="" disabled selected>Select Check In Time</option>
+                <option value="7:00 AM">7:00 AM</option>
+                <option value="1:00 PM">1:00 PM</option>
+                <option value="6:00 PM">6:00 PM</option>
             </select>
 
-            <label for="checkout">Check Out Time:</label>
-            <select id="checkout" name="checkout">
-                    <option value="" disabled selected>Select Check In Time</option>
-                    <option value="9:00 AM">9:00 AM</option>
-                    <option value="3:00 PM">3:00 PM</option>
-                    <option value="8:00 PM">8:00 PM</option>
+            <label for="editCheckOut">Check Out Time:</label>
+            <select id="editCheckOut" name="checkout" required onchange="toggleCustomCheckoutTime()">
+                <option value="" disabled selected>Select Check Out Time</option>
+                <option value="9:00 AM">9:00 AM</option>
+                <option value="3:00 PM">3:00 PM</option>
+                <option value="8:00 PM">8:00 PM</option>
+                <option value="other">Other (Specify Time)</option>
             </select>
+
+            <input type="text" id="customCheckOutTime" name="customCheckOutTime" placeholder="Enter custom check out time" style="display:none;">
 
             <label for="purpose">Purpose of Visit:</label>
             <textarea id="purpose" name="purpose"></textarea>
