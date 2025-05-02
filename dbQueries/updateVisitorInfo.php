@@ -14,6 +14,7 @@ $customCheckOutTime = mysqli_real_escape_string($conn, $_POST['customCheckOutTim
 $purpose = isset($_POST['editPurpose']) ? mysqli_real_escape_string($conn, $_POST['editPurpose']) : null;
 $department = isset($_POST['editDepartment']) ? mysqli_real_escape_string($conn, $_POST['editDepartment']) : null;
 $visit_status = isset($_POST['editStatus']) ? intval($_POST['editStatus']) : 0;
+$appointment_status = isset($_POST['editApprovalStatus']) ? intval($_POST['editApprovalStatus']) : 2;
 $encoder = isset($_POST['encoder']) ? mysqli_real_escape_string($conn, $_POST['encoder']) : null;
 
 if ($checkout_time === "other" && !empty($customCheckOutTime)) {
@@ -34,7 +35,8 @@ if ($name && $email && $phone && $visit_date && $checkin_time && $appointment_id
                         purpose = '$purpose', 
                         department = '$department', 
                         visit_status = $visit_status,
-                        encoder = '$encoder'
+                        encoder = '$encoder',
+                        appointment_status = $appointment_status
                     WHERE id = $appointment_id";
 
     if (mysqli_query($conn, $updateQuery)) {

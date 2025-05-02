@@ -7,6 +7,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 include('dbQueries/db.php');
+include('dbQueries/autoStatusManager.php');
 
 $appointments = [];
 $from = isset($_GET['from']) ? $_GET['from'] : '';
@@ -101,6 +102,8 @@ if ($stmt) {
                     <th>Purpose of Visit</th>
                     <th>Department</th>
                     <th>Visit Status</th>
+                    <th>Approval Status</th>
+                    <th>Attendance</th>
                     <th>Encoder</th>
                 </tr>
             </thead>
@@ -125,13 +128,36 @@ if ($stmt) {
                             echo "<td class='checkInStatus' style='color: orange;'>Reserved</td>";
                         }
                         else{
+                            echo "<td class='checkInStatus' style='color: gray;'>Cancelled</td>";
+                        }
+                        
+                        if ($appointment['appointment_status'] == '1') {
+                            echo "<td class='checkInStatus' style='color: green;'>Accepted</td>";
+                        } else if ($appointment['appointment_status'] == '0') {
+                            echo "<td class='checkInStatus' style='color: red;'>Denied</td>";
+                        } else if ($appointment['appointment_status'] == '2') {
+                            echo "<td class='checkInStatus' style='color: orange;'>Pending</td>";
+                        }
+                        else{
                             echo "<td class='checkInStatus' style='color: gray;'>Unknown</td>";
                         }
+
+                        if ($appointment['attendance'] == '1') {
+                            echo "<td class='checkInStatus' style='color: green;'>Attended</td>";
+                        } else if ($appointment['attendance'] == '0') {
+                            echo "<td class='checkInStatus' style='color: red;'>Did Not Attend</td>";
+                        } else if ($appointment['attendance'] == '2') {
+                            echo "<td class='checkInStatus' style='color: orange;'>Pending</td>";
+                        }
+                        else{
+                            echo "<td class='checkInStatus' style='color: gray;'>Unknown</td>";
+                        }
+                        
                         echo "<td>" . htmlspecialchars($appointment['encoder']) . "</td>";
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr style='text-align: center;'><td colspan='9'>No appointments found.</td></tr>";
+                    echo "<tr style='text-align: center;'><td colspan='10'>No appointments found.</td></tr>";
                 }
                 ?>
             </tbody>
