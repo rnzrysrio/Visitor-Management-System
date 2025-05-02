@@ -7,7 +7,7 @@ if (!isset($_SESSION['username'])) {
 
 // Include database connection file
 include('dbQueries/db.php'); // Adjust the path as necessary
-include('dbQueries/autoCheckoutManager.php'); // Include auto checkout manager
+include('dbQueries/autoStatusManager.php'); // Include auto checkout manager
 
 // Check if the user is logged in and retrieve user information
 if (isset($_SESSION['username'])) {
@@ -66,6 +66,7 @@ if (isset($_SESSION['username'])) {
                     <th>Purpose of Visit</th>
                     <th>Department</th>
                     <th>Visit Status</th>
+                    <th>Approval Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -89,13 +90,26 @@ if (isset($_SESSION['username'])) {
                         } else if ($appointment['visit_status'] == '2') {
                             echo "<td class='checkInStatus' style='color: orange;'>Reserved</td>";
                         }
+                        else if ($appointment['visit_status'] == '3') {
+                            echo "<td class='checkInStatus' style='color: gray;'>Cancelled</td>";
+                        } else {
+                            echo "<td class='checkInStatus' style='color: gray;'>Unknown</td>";
+                        }
+
+                        if ($appointment['appointment_status'] == '1') {
+                            echo "<td class='checkInStatus' style='color: green;'>Approved</td>";
+                        } else if ($appointment['appointment_status'] == '0') {
+                            echo "<td class='checkInStatus' style='color: red;'>Denied</td>";
+                        } else if ($appointment['appointment_status'] == '2') {
+                            echo "<td class='checkInStatus' style='color: orange;'>Pending</td>";
+                        }
                         else{
                             echo "<td class='checkInStatus' style='color: gray;'>Unknown</td>";
                         }
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='8'>No appointments found.</td></tr>";
+                    echo "<tr><td colspan='10'>No appointments found.</td></tr>";
                 }
                 ?>
             </tbody>

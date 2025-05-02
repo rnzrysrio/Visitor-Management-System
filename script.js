@@ -22,7 +22,6 @@ function toggleAppointmentModal() {
 function updateCheckoutTime() {
     const checkInTime = document.getElementById('editCheckIn').value;
     const checkOutSelect = document.getElementById('editCheckOut');
-    const customCheckOutTimeInput = document.getElementById('customCheckOutTime');
 
     // Remove all existing options
     while (checkOutSelect.options.length > 0) {
@@ -130,6 +129,7 @@ function toggleCustomCheckoutTime() {
 
 function toggleEditVisitorInfoModal(appointment) {
     var modal = document.getElementById("editVisitorInfoModal");
+    console.log(appointment);
 
     if (modal.style.display === "block") {
         modal.style.display = "none";
@@ -145,6 +145,7 @@ function toggleEditVisitorInfoModal(appointment) {
         document.getElementById("editPurpose").value = appointment.purpose;
         document.getElementById("editDepartment").value = appointment.department;
         document.getElementById("editStatus").value = appointment.visit_status;
+        document.getElementById("editApprovalStatus").value = appointment.appointment_status;
 
         // Store the initial value of the checkout time (to preserve during function calls)
         document.getElementById('editCheckOut').dataset.initialValue = appointment.checkout_time;

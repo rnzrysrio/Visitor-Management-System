@@ -6,6 +6,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 include('dbQueries/db.php');
+include('dbQueries/autoStatusManager.php');
 
 $appointments = [];
 $searchName = "";
@@ -79,6 +80,7 @@ if ($result) {
                         <th>Check In Time</th>
                         <th>Check Out Time</th>
                         <th>Visit Status</th>
+                        <th>Approval Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -98,14 +100,28 @@ if ($result) {
                         } else if ($appointment['visit_status'] == '2') {
                             echo "<td class='checkInStatus' style='color: orange;'>Reserved</td>";
                         }
+                        else if ($appointment['visit_status'] == '3') {
+                            echo "<td class='checkInStatus' style='color: gray;'>Cancelled</td>";
+                        } else {
+                            echo "<td class='checkInStatus' style='color: gray;'>Unknown</td>";
+                        }
+
+                        if ($appointment['appointment_status'] == '1') {
+                            echo "<td class='checkInStatus' style='color: green;'>Approved</td>";
+                        } else if ($appointment['appointment_status'] == '0') {
+                            echo "<td class='checkInStatus' style='color: red;'>Denied</td>";
+                        } else if ($appointment['appointment_status'] == '2') {
+                            echo "<td class='checkInStatus' style='color: orange;'>Pending</td>";
+                        }
                         else{
                             echo "<td class='checkInStatus' style='color: gray;'>Unknown</td>";
                         }
+
                             echo "<td id='actionCell'><button class='actionBtn' onclick='toggleEditVisitorInfoModal(" . htmlspecialchars(json_encode($appointment)) . ")'>Edit</button> <button class='actionBtn' onclick='confirmDelete(" . $appointment['id'] . ")'>Delete</button></td>";
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td style='text-align: center;' colspan='9'>No appointments found.</td></tr>";
+                        echo "<tr><td style='text-align: center;' colspan='7'>No appointments found.</td></tr>";
                     }
                     ?>
                 </tbody>
@@ -166,8 +182,17 @@ if ($result) {
 
                 <label for="editStatus">Visit Status:</label>
                 <select id="editStatus" name="editStatus" required>
+                    <option value="3">Cancelled</option>
+                    <option value="2">Reserved</option>
                     <option value="1">Checked-In</option>
                     <option value="0">Checked-Out</option>
+                </select>
+
+                <label for="editApprovalStatus">Approval Status:</label>
+                <select id="editApprovalStatus" name="editApprovalStatus" required>
+                    <option value="2">Pending</option>
+                    <option value="1">Approved</option>
+                    <option value="0">Denied</option>
                 </select>
 
                 <input type="hidden" id="encoder" name="encoder" value="<?php echo "Admin " . $_SESSION['name']; ?>">
